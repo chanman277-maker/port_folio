@@ -179,6 +179,10 @@
   .about-text .role { font-size: clamp(13px, 1.1vw, 16px); letter-spacing: .22em; color: #7d93a6; font-weight: 500; }
   .about-desc { display: flex; flex-direction: column; gap: 12px; }
   .about-desc p { margin: 0; font-size: clamp(13px, 1.05vw, 15px); line-height: 1.9; color: #5f5f5f; }
+  .about-likes { margin-top: 6px; }
+  .about-likes h3 { margin: 0 0 10px; font-size: clamp(15px, 1.2vw, 17px); font-weight: 500; letter-spacing: .12em; color: var(--accent); }
+  .about-likes ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: nowrap; gap: 8px; }
+  .about-likes li { padding: 5px 12px; white-space: nowrap; border: 1px solid rgba(143, 178, 204, .65); border-radius: 999px; background: #fafcfe; font-size: clamp(12px, .92vw, 13px); color: #4c4c4c; line-height: 1.6; }
   .profile-name span { margin-left: .6em; font-size: .6em; color: #7d93a6; letter-spacing: .08em; }
   .profile .lead { margin-top: .8em; }
   .profile .bar-list li { border-left: none; padding: 0; }
@@ -211,7 +215,6 @@
   .works .lead { font-size: clamp(15px, 1.3vw, 19px); }
   .works-head { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
   .title small { margin-left: .5em; font-size: .3em; letter-spacing: .12em; }
-  .works-panels { display: flex; flex-direction: column; gap: 32px; margin-top: 28px; }
   .works-panel { padding: 20px 24px 28px; border-radius: 16px; background: #fff; }
   .works-sub {
     display: flex; align-items: center; gap: 16px;
@@ -221,6 +224,29 @@
   .works-sub::before { content: ""; width: 5px; height: 1.1em; border-radius: 3px; background: var(--accent); }
   .works-sub::after { content: ""; flex: 1; height: 1px; background: rgba(143, 178, 204, .55); }
   .works-panel .lead { margin-top: .7em; }
+  /* ---------- 階段みたいなタブ ---------- */
+  .tabs { display: flex; align-items: flex-end; margin-top: 28px; position: relative; z-index: 2; }
+  .tab {
+    appearance: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    width: clamp(116px, 11.5vw, 164px); height: 52px; box-sizing: border-box;
+    padding: 0 12px;
+    border: 1px solid rgba(143, 178, 204, .6); border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+    background: #e6eef8; color: var(--accent);
+    font: inherit; font-size: 14px; letter-spacing: .2em; font-weight: 500;
+    margin-right: -1px;
+    transition: background .25s, color .25s;
+  }
+  .tab:hover { background: #eef4fb; }
+  .tab.is-active { background: #fff; color: #3d3d3d; z-index: 3; box-shadow: 0 -6px 16px rgba(120, 140, 170, .10); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .works-panels { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 0; }
+  .works-panel { grid-area: 1 / 1; visibility: hidden; opacity: 0; border-top-left-radius: 0; }
+  .works-panel.is-active { visibility: visible; opacity: 1; animation: panelIn .5s ease both; }
+  .works-sub { display: none; }
+  @keyframes panelIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .works-panel.is-active { animation: none; } }
   .cards {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: clamp(20px, 3vw, 48px);
@@ -348,27 +374,64 @@
   /* ---------- responsive ---------- */
   @media (max-width: 900px) {
     .paw { display: none; }
-    .info-box .bar-list { grid-template-columns: 1fr 1fr; }
-    .gallery { grid-template-columns: repeat(2, 1fr); margin-top: 48px; }
-    .nav { display: none; }
-    .split,
-    .hero .split { grid-template-columns: 1fr; min-height: auto; }
-    .split .text { padding: 64px var(--gutter) 48px; }
+    .site-header { padding: 14px var(--gutter); }
+    .logo { font-size: 13px; }
+    .nav { display: flex; gap: 16px; font-size: 11px; }
+
+    /* 共通：1カラム */
+    .split, .hero .split { grid-template-columns: 1fr; min-height: auto; }
+    .split .text { padding: 64px var(--gutter) 40px; }
     .split .photo { height: 62vw; max-height: 480px; }
-    .hero .split { min-height: 100vh; align-content: center; }
+    .hero .split { min-height: 100vh; min-height: 100svh; align-content: center; }
     .hero .text { padding-top: 120px; padding-right: var(--gutter); }
     .hero .photo img { -webkit-mask-image: none; mask-image: none; }
+
+    /* WORKS */
+    .works { padding: 88px clamp(16px, 4vw, 32px) 72px; min-height: auto; }
     .cards { grid-template-columns: 1fr; max-width: 480px; }
-    .works { padding: 100px var(--gutter); min-height: auto; }
-    .skill-box { grid-template-columns: 1fr; padding: 32px 0; }
-    .skill-box > div:first-of-type ul, .skill-box > div:last-of-type ul { grid-template-columns: 1fr; }
-    .skill-box > div + div { border-left: none; border-top: 3px solid var(--line); margin: 28px clamp(24px, 3.4vw, 56px) 0; padding: 28px 0 0; }
-    .profile .bar-list { padding-left: 24px; }
-    .profile { padding: 100px var(--gutter) 72px; }
-    .about-body { grid-template-columns: 1fr; width: 100%; }
-    .about-text { gap: 20px; }
-    .works { padding-bottom: 72px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .icon-shot { overflow: hidden; }
+    .icon-shot img { width: 100%; min-width: 0; }
+
+    /* ABOUT US */
+    .profile { padding: 88px var(--gutter) 64px; min-height: auto; }
+    .about-head { max-width: 100%; }
+    .about-body { grid-template-columns: 1fr; width: 100%; gap: 28px; }
     .about-photo { width: 100%; }
+    .about-text { gap: 12px; }
+    .about-likes ul { flex-wrap: wrap; }
+    .about-likes li { white-space: normal; }
+
+    /* スキル */
+    .skill-box { padding: 32px 0; }
+    .skill-box > div:first-of-type ul, .skill-box > div:last-of-type ul { grid-template-columns: 1fr; }
+    .skill-box > div:first-of-type li:last-child:nth-child(odd) { grid-column: auto; }
+    .skill-box h3 { white-space: normal; }
+  }
+  @media (max-width: 600px) {
+    h2.title { font-size: clamp(34px, 9.5vw, 44px); }
+    .title-dog { filter: contrast(.56) brightness(1.28); }
+    .dog-cream { width: 70px; } .dog-brown { width: 66px; } .dog-gray { width: 62px; }
+    .title-dogs { gap: 2px; }
+    .hero .title { font-size: clamp(36px, 12.5vw, 56px); }
+    .hero .name { font-size: 18px; }
+
+    .tabs { width: 100%; }
+    .tab { flex: 1 1 0; width: auto; min-width: 0; height: 46px; padding: 0 4px; font-size: 12px; letter-spacing: .1em; }
+    .works-panel { padding: 16px 14px 22px; }
+    .works .lead { font-size: 14px; }
+    #panel-banner .gallery { grid-template-columns: 1fr; row-gap: 22px; }
+    .card .label { font-size: 14px; }
+
+    .profile { padding: 76px var(--gutter) 56px; }
+    .about-text .profile-name { font-size: 22px; }
+    .about-desc p { font-size: 14px; }
+
+    .skill-box { border-radius: 14px; padding: 24px 0; }
+    .skill-box > div { padding: 0 14px; }
+    .skill-box > div + div { margin: 24px 14px 0; padding: 24px 0 0; }
+    .skill-box .sk-list li { padding: 14px 16px 16px; }
+    .skill-dog { right: 6%; }
   }
 </style>
 </head>
@@ -425,9 +488,14 @@
       <h2 class="title" data-dog="cream">WORKS<small>（制作実績）</small></h2>
     </div>
 
+    <div class="tabs reveal" role="tablist" aria-label="制作実績の切り替え">
+      <button class="tab is-active" role="tab" id="tab-banner" aria-controls="panel-banner" aria-selected="true" data-target="panel-banner">BANNER</button>
+      <button class="tab" role="tab" id="tab-web" aria-controls="panel-web" aria-selected="false" tabindex="-1" data-target="panel-web">WEB</button>
+      <button class="tab" role="tab" id="tab-icon" aria-controls="panel-icon" aria-selected="false" tabindex="-1" data-target="panel-icon">ICON</button>
+    </div>
     <div class="works-panels">
       <!-- BANNER -->
-      <div class="works-panel" id="panel-banner">
+      <div class="works-panel is-active" role="tabpanel" id="panel-banner" aria-labelledby="tab-banner">
         <h3 class="works-sub">BANNER</h3>
         <p class="lead">実際に携わったWebサイトのバナーを掲載します。</p>
         <div class="gallery">
@@ -441,7 +509,7 @@
       </div>
 
       <!-- WEB -->
-      <div class="works-panel" id="panel-web">
+      <div class="works-panel" role="tabpanel" id="panel-web" aria-labelledby="tab-web" inert>
         <h3 class="works-sub">WEB</h3>
         <p class="lead">実際に携わったWebサイトの下層ページを掲載します。</p>
         <div class="cards">
@@ -464,7 +532,7 @@
       </div>
 
       <!-- ICON -->
-      <div class="works-panel" id="panel-icon">
+      <div class="works-panel" role="tabpanel" id="panel-icon" aria-labelledby="tab-icon" inert>
         <h3 class="works-sub">ICON</h3>
         <p class="lead">制作したアイコンを掲載します。 ※SNS経由でご依頼いただきました。<br>手描きのデジタルイラストになります。</p>
         <figure class="icon-shot"><img src="images/icon-all.jpg" alt="Always Flowers のアイコン4点（フラワーショップ・フラワーバッグ No.1・フラワーバッグ No.2・メッセージブーケ）" loading="lazy"></figure>
@@ -489,6 +557,14 @@
             <p>現職では、自社開発のホテル・旅館向け宿泊予約システムの開発部署で約5年間、ヘルプデスク業務を経験し、お客様の立場に立って課題を考え、解決に向けた提案力を培ってきました。</p>
             <p>その後、Web・デザインを学び、社内異動を経て約3年間、お客様のWebサイトの運用・更新やデザイン業務を担当しています。</p>
             <p>お客様に寄り添う対応力と課題解決力を活かし、Web・デザイン・運用まで幅広く携わっています。</p>
+          </div>
+          <div class="about-likes">
+            <h3>すきなこと</h3>
+            <ul>
+              <li>水泳</li>
+              <li>美術館・アート展巡り</li>
+              <li>イラストを描くこと（犬も私が描きました…！）</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -563,6 +639,31 @@
     names.forEach((n) => row.appendChild(make(n)));
     t.appendChild(row);
   });
+
+  // WORKS タブ切り替え
+  (function () {
+    const tabs = [...document.querySelectorAll('.tab')];
+    if (!tabs.length) return;
+    function select(tab) {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        const p = document.getElementById(t.dataset.target);
+        p.inert = !on;
+        p.classList.toggle('is-active', on);
+      });
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+  })();
 </script>
 </body>
 </html>
