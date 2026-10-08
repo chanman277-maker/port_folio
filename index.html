@@ -275,6 +275,11 @@
   .card .label { margin: 14px 0 10px; text-align: center; font-size: clamp(14px, 1.15vw, 16px); font-weight: 500; letter-spacing: .04em; line-height: 1.5; color: #3d3d3d; }
   .card .label a { display: block; margin-top: 2px; font-size: 12px; letter-spacing: 0; overflow-wrap: anywhere; color: #3d3d3d; text-decoration: underline; text-decoration-color: rgba(143, 178, 204, .8); text-underline-offset: 3px; transition: color .2s; }
   .card .label a:hover { color: var(--accent); }
+  .card-link { position: relative; }
+  .card-link .label a::after { content: ""; position: absolute; inset: 0; border-radius: 10px; }
+  .card-link:hover .label a { color: var(--accent); }
+  .card-link:hover .thumb img { opacity: .92; }
+  .card-link .label a:focus-visible::after { outline: 2px solid var(--accent); outline-offset: 2px; }
   .tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: auto; }
   .tags .tool-tag { display: inline-block; margin: 0; }
 
@@ -324,7 +329,7 @@
   .info-box .bar-list h3 { font-size: clamp(17px, 1.5vw, 21px); }
   .info-box .bar-list p { font-size: 14px; }
 
-  /* ---------- skills（ABOUT US の下に表示） ---------- */
+  /* ---------- skills（ABOUT ME の下に表示） ---------- */
   #works .title { width: 720px; max-width: 100%; }
   .skill-box { position: relative;
     margin-top: 48px;
@@ -360,6 +365,24 @@
     text-align: center; font-size: 12px; letter-spacing: .2em; color: #9aa3ad;
     background: var(--bg-soft);
   }
+  .thanks { padding: 120px var(--gutter) 88px; }
+  .thanks-box { position: relative; width: 720px; max-width: 100%; margin: 0 auto; padding: 30px 0; text-align: center;
+    border-top: 1px solid rgba(143, 178, 204, .65); border-bottom: 1px solid rgba(143, 178, 204, .65); }
+  .thanks-box p { margin: 0; font-size: clamp(15px, 2vw, 20px); letter-spacing: .12em; color: #4c4c4c; }
+  .thanks-box p { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 0 var(--gutter); }
+  .thanks-paw { flex: none; width: 26px; height: 26px; color: #c3d3e7; transform: rotate(var(--r, 0deg)); }
+  .thanks-text { white-space: nowrap; }
+  @media (max-width: 600px) {
+    .thanks-box p { gap: 10px; padding: 0 4px; }
+    .thanks-box p { font-size: 15px; letter-spacing: .08em; }
+    .thanks-text { white-space: normal; line-height: 1.7; }
+    .thanks-text > span { display: block; }
+    .thanks-paw { width: 18px; height: 18px; }
+  }
+  .thanks-dogs { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, 8px); display: flex; align-items: flex-end; gap: clamp(4px, .8vw, 12px); pointer-events: none; }
+  .thanks-dogs img { height: auto; filter: contrast(.56) brightness(1.28); }
+  .thanks-dogs .dog-cream, .thanks-dogs .dog-brown, .thanks-dogs .dog-gray { transform: none; }
+  @media (max-width: 600px) { .thanks { padding: 100px var(--gutter) 72px; } .thanks-dogs .dog-cream { width: 70px; } .thanks-dogs .dog-brown { width: 66px; } .thanks-dogs .dog-gray { width: 62px; } }
 
   /* ---------- reveal ---------- */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 1s ease, transform 1s ease; }
@@ -393,7 +416,7 @@
     .icon-shot { overflow: hidden; }
     .icon-shot img { width: 100%; min-width: 0; }
 
-    /* ABOUT US */
+    /* ABOUT ME */
     .profile { padding: 88px var(--gutter) 64px; min-height: auto; }
     .about-head { max-width: 100%; }
     .about-body { grid-template-columns: 1fr; width: 100%; gap: 28px; }
@@ -454,7 +477,7 @@
   <a href="#top" class="logo">PORTFOLIO</a>
   <nav class="nav">
     <a href="#works">WORKS</a>
-    <a href="#about">ABOUT US</a>
+    <a href="#about">ABOUT ME</a>
   </nav>
 </header>
 
@@ -513,17 +536,17 @@
         <h3 class="works-sub">WEB</h3>
         <p class="lead">実際に携わったWebサイトの下層ページを掲載します。</p>
         <div class="cards">
-          <article class="card">
+          <article class="card card-link">
             <div class="thumb"><img src="images/web-02.webp" alt="NISEKO SNOW COTTON のトップページ" loading="lazy"></div>
             <p class="label">下層ページ 01：<a href="https://www.takahashi-farmette.com/cotton/" target="_blank" rel="noopener noreferrer">https://www.takahashi-farmette.com/cotton/</a></p>
             <div class="tags"><span class="tool-tag">#figma</span><span class="tool-tag">#design</span><span class="tool-tag">#direction</span></div>
           </article>
-          <article class="card">
+          <article class="card card-link">
             <div class="thumb"><img src="images/web-01.webp" alt="WEDDING &amp; BANQUET ウェディング&amp;宴会のページ（CAFE CANAL 1610 会場）" loading="lazy"></div>
             <p class="label">下層ページ 02：<a href="https://www.nagoya-nishiki.jalcity.co.jp/wedding/" target="_blank" rel="noopener noreferrer">https://www.nagoya-nishiki.jalcity.co.jp/wedding/</a></p>
             <div class="tags"><span class="tool-tag">#figma</span><span class="tool-tag">#design</span><span class="tool-tag">#direction</span></div>
           </article>
-          <article class="card">
+          <article class="card card-link">
             <div class="thumb"><img src="images/web-03.webp" alt="崖cafe（三段壁洞窟）のページ上部" loading="lazy"></div>
             <p class="label">下層ページ 03：<a href="https://sandanbeki.com/gake_cafe/" target="_blank" rel="noopener noreferrer">https://sandanbeki.com/gake_cafe/</a></p>
             <div class="tags"><span class="tool-tag">#figma</span><span class="tool-tag">#design</span><span class="tool-tag">#direction</span></div>
@@ -544,7 +567,7 @@
   <section class="profile" id="about">
     <div class="about-wrap">
       <div class="about-head reveal">
-        <h2 class="title" data-dog="gray">ABOUT US<small>（私について）</small></h2>
+        <h2 class="title" data-dog="gray">ABOUT ME<small>（私について）</small></h2>
       </div>
       <div class="about-body reveal">
         <figure class="about-photo">
@@ -594,6 +617,15 @@
     </div>
   </section>
 </main>
+
+<div class="thanks">
+  <div class="thanks-box">
+    <div class="thanks-dogs" aria-hidden="true">
+      <img src="images/dog-cream.png" alt="" class="dog-cream"><img src="images/dog-brown.png" alt="" class="dog-brown"><img src="images/dog-gray.png" alt="" class="dog-gray">
+    </div>
+    <p><svg class="thanks-paw" style="--r:-24deg" aria-hidden="true"><use href="#paw"/></svg><span class="thanks-text"><span>最後まで見ていただき</span><span>ありがとうございました！</span></span><svg class="thanks-paw" style="--r:24deg;transform:scaleX(-1) rotate(24deg)" aria-hidden="true"><use href="#paw"/></svg></p>
+  </div>
+</div>
 
 <footer>&copy; YUKA ANDO PORTFOLIO</footer>
 </div>
